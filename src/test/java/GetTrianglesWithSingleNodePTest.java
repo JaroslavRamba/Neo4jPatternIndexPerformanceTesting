@@ -1,8 +1,8 @@
 import com.graphaware.test.performance.CacheConfiguration;
+import com.graphaware.test.performance.CacheParameter;
 import com.graphaware.test.performance.Parameter;
 import com.graphaware.test.performance.PerformanceTest;
 import com.graphaware.test.util.TestUtils;
-import com.troupmar.graphaware.cache.CacheParameter;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
 
@@ -13,16 +13,6 @@ import java.util.*;
  * Created by Jaroslav on 3/25/15.
  */
 public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
-
-
-    /*
-    * 1) dotazovat se nad 1 id nodu a unionovat to pres počet uzlu
-    *   - vylepšení: nad neopakováním se pro dotazovaní nad jedním uzlem, již dotazované uzly neopakovat a rovnou přeskočit
-    * 2) to samé, ale dotazovat se přes všechny nody a udělat faktorial počtu nodu = počet unionu
-    * 3) vytvoření externí databaze a po jednom patternu to tam šoupat a dotazovat se nad tím, pak to smazat a takhle dokola krom vytvoreni DB
-    * 4) všechno to samé jako předchozí ale na začátku vytvořit DB a všechny patterny tam vložit = subgraf patternu a nad tím se pak dotazovat přes všechny zaindexpvané patterny
-    *
-    */
 
     private SortedSet<String> triangleSet;
     private List<Map<String, Object>> optResults;
@@ -48,7 +38,6 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
     public List<Parameter> parameters() {
         List<Parameter> result = new LinkedList<>();
         result.add(new CacheParameter("cache")); //no cache, low-level cache, high-level cache
-        //result.add(new ExponentialParameter("nodeCount", 10, 1, 2, 1)); //10 nodes, then 100
         return result;
     }
 
@@ -81,22 +70,12 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
      */
     @Override
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
-        /*
-        GeneratorApi generator = new GeneratorApi(database);
-        int nodeCount = (int) params.get("nodeCount");
-        generator.erdosRenyiSocialNetwork(nodeCount, nodeCount * 4); // *5 fails to satisfy Erdos-Renyi precondition that the number of edges must be < (n*(n-1))/2 when there are 10 nodes
-        Log.info("Database prepared");
-        */
-
         triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "only-nodes");
-        //triangleSet = PerformanceTestHelper
-        //     .getTriangleSetFromFile("/Users/Martin/git/Neo4jPatternIndex/ptt-only-nodes-original.txt", "only-nodes");
     }
 
     @Override
     public String getExistingDatabasePath() {
-        //return null;
-        return "/Users/Martin/Skola/CVUT_FIT/Magister/2.2/DIP/neo4j-community-2.2.0-RC01/data/graph-1000.db.zip";
+        return "testDB/graph1000-5000.db.zip";
     }
 
     /**
@@ -162,7 +141,7 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
         }
 
 
-        return  time;
+        return time;
     }
 
     /**

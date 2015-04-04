@@ -72,13 +72,14 @@ public class GetTrianglesWithAllNodesPTest implements PerformanceTest {
     @Override
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
         triangleSet = PerformanceTestHelper
-                .getTriangleSetFromFile("/Users/Martin/git/Neo4jPatternIndex/ptt-only-nodes-original.txt", "only-nodes");
+                .getTriangleSetFromFile("ptt-only-nodes-original.txt", "only-nodes");
     }
 
     @Override
     public String getExistingDatabasePath() {
-        return "/Users/Martin/Skola/CVUT_FIT/Magister/2.2/DIP/neo4j-community-2.2.0-RC01/data/graph-1000.db.zip";
+        return "testDb/graph1000-5000.db.zip";
     }
+
 
     /**
      * {@inheritDoc}
@@ -94,7 +95,7 @@ public class GetTrianglesWithAllNodesPTest implements PerformanceTest {
     @Override
     public long run(final GraphDatabaseService database, Map<String, Object> params) {
         long time = 0;
-        int k=0;
+        int k = 0;
 
         // TODO remove
         System.out.println("Number of nodes set: " + triangleSet.size());
@@ -121,7 +122,8 @@ public class GetTrianglesWithAllNodesPTest implements PerformanceTest {
                         PerformanceTestHelper.prepareResults(result, optResults);
                     }
                 }
-            }});
+            }
+        });
 
         if (writePermission) {
             System.out.println("Saving results to file...");
@@ -137,14 +139,14 @@ public class GetTrianglesWithAllNodesPTest implements PerformanceTest {
             }
         }
 
-        return  time;
+        return time;
     }
 
 
     /**
      * Supportive method for permutation.
      */
-    public static final <T> void swap (T[] a, int i, int j) {
+    public static final <T> void swap(T[] a, int i, int j) {
         T t = a[i];
         a[i] = a[j];
         a[j] = t;

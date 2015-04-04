@@ -75,16 +75,12 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
     @Override
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
         triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "");
-        //triangleSet = PerformanceTestHelper
-        //      .getTriangleSetFromFile("/Users/Martin/git/Neo4jPatternIndex/ptt-all-original.txt", "");
     }
-
 
 
     @Override
     public String getExistingDatabasePath() {
-        //loadTringlesFromFile();
-        return "/Users/Martin/Skola/CVUT_FIT/Magister/2.2/DIP/neo4j-community-2.2.0-RC01/data/graph-1000.db.zip";
+        return "testDb/graph1000-5000.db.zip";
     }
 
     /**
@@ -212,42 +208,6 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
             temporaryDatabase = null;
         }
     }
-
-    /*
-    private void loadTringlesFromFile() {
-        try {
-            try (BufferedReader br = new BufferedReader(new FileReader("/home/Jaroslav/Dropbox/FIT/Magistr/Diplomová práce/Testování/triangles_nodes_with_relationships_data.txt"))) {
-                String line;
-                try {
-                    while ((line = br.readLine()) != null) {
-                        //System.out.println(line);
-                        String[] parts = line.split("\\|");
-                        //System.out.println(parts[1]);
-                        Long[] nodes = new Long[3];
-                        nodes[0] = Long.parseLong(parts[1]);
-                        nodes[1] = Long.parseLong(parts[2]);
-                        nodes[2] = Long.parseLong(parts[3]);
-
-                        Long[] relationships = new Long[3];
-                        relationships[0] = Long.parseLong(parts[4]);
-                        relationships[1] = Long.parseLong(parts[5]);
-                        relationships[2] = Long.parseLong(parts[6]);
-
-                        Arrays.sort(nodes);
-                        Arrays.sort(relationships);
-
-                        String key = relationships[0] + "_" + relationships[1] + "_" + relationships[2];
-                        triangleSet.add(key);
-                    }
-                } catch (Exception ex) {
-
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 
     private void createTemporaryFolder() {
         temporaryFolder = new TemporaryFolder();

@@ -42,7 +42,7 @@ public class GetTrianglesOriginalPTest implements PerformanceTest {
      */
     @Override
     public int dryRuns(Map<String, Object> params) {
-        return ((CacheConfiguration) params.get("cache")).needsWarmup() ? 10000 : 100;
+        return ((CacheConfiguration) params.get("cache")).needsWarmup() ? 100 : 100;
     }
 
     /**
@@ -67,14 +67,11 @@ public class GetTrianglesOriginalPTest implements PerformanceTest {
     @Override
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
 
-        GeneratorApi generator = new GeneratorApi(database);
-        generator.erdosRenyiSocialNetwork(1000, 5000);
-        Log.info("Database prepared");
     }
 
     @Override
     public String getExistingDatabasePath() {
-        return null;
+        return "testDb/graph10000-50000.db.zip";
     }
 
     /**
@@ -99,7 +96,7 @@ public class GetTrianglesOriginalPTest implements PerformanceTest {
             }
         });
 
-        return  time;
+        return time;
     }
 
     /**

@@ -11,7 +11,8 @@ public class PerformanceTestQueries extends PerformanceTestSuite {
         return new PerformanceTest[]{
                 //new GetTrianglesWithSingleNodePTest()
                 //new GetTrianglesWithAllNodesPTest()
-                new GetTrianglesDBSinglePTest()
+                //new GetTrianglesDBSinglePTest()
+                new GetTrianglesOriginalPTest()
         };
     }
 

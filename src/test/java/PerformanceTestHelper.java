@@ -1,8 +1,5 @@
-import org.apache.commons.lang.SerializationUtils;
-import org.neo4j.cypher.ExecutionResult;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
-import org.neo4j.test.GraphDescription;
 
 import java.io.*;
 import java.util.*;
@@ -14,13 +11,14 @@ public class PerformanceTestHelper {
 
     /**
      * Method takes 3 nodes, or relationships, sorts them by their id value and returns concatenated unique key.
+     *
      * @param itemA
      * @param itemB
      * @param itemC
      * @return unique key from concatenated node or relationship ids.
      */
     private static String getKeyToTriangleSet(Object itemA, Object itemB, Object itemC) {
-        Long [] items = new Long[3];
+        Long[] items = new Long[3];
         items[0] = Long.parseLong(itemA.toString());
         items[1] = Long.parseLong(itemB.toString());
         items[2] = Long.parseLong(itemC.toString());
@@ -28,7 +26,7 @@ public class PerformanceTestHelper {
         return items[0] + "_" + items[1] + "_" + items[2];
     }
 
-    private static String getKeyToTriangleSet(Object [] items) {
+    private static String getKeyToTriangleSet(Object[] items) {
         if (items.length != 6) {
             return null;
         }
@@ -39,6 +37,7 @@ public class PerformanceTestHelper {
 
     /**
      * Method loads triangleSet from file represented with its absolute path.
+     *
      * @param absPath absolute path to file.
      * @return unique triangleSet with sorted-concatenated keys, that represent individual triangles.
      */
@@ -54,7 +53,7 @@ public class PerformanceTestHelper {
                     br.readLine();
 
                     while ((line = br.readLine()) != null) {
-                        String[] parts = line.substring(1, line.length() - 1).split("\\|");
+                        String[] parts = line.substring(1, line.length() - 1).split("\\|"); //TODO change to _
                         if (type.equals("only-nodes")) {
                             triangleSet.add(getKeyToTriangleSet(parts[0], parts[1], parts[2]));
                         } else if (type.equals("")) {
@@ -82,6 +81,7 @@ public class PerformanceTestHelper {
 
     /**
      * Method loads triangleSet from file represented with its absolute path.
+     *
      * @param database current working database.
      * @return unique triangleSet with sorted-concatenated keys, that represent individual triangles.
      */
@@ -107,7 +107,7 @@ public class PerformanceTestHelper {
                 if (type.equals("only-nodes")) {
                     triangleSet.add(getKeyToTriangleSet(row.get("id(a)"), row.get("id(b)"), row.get("id(c)")));
                 } else if (type.equals("")) {
-                    triangleSet.add(getKeyToTriangleSet(new Object [] {
+                    triangleSet.add(getKeyToTriangleSet(new Object[]{
                             row.get("id(a)"), row.get("id(b)"), row.get("id(c)"),
                             row.get("id(r)"), row.get("id(p)"), row.get("id(q)")
                     }));
@@ -134,8 +134,9 @@ public class PerformanceTestHelper {
 
     /**
      * Method to store data from Result instance into file. Data in this instance are received within Cypher query.
+     *
      * @param fileName filename of the file, where data should be saved.
-     * @param result data to be stored.
+     * @param result   data to be stored.
      * @throws FileNotFoundException
      */
     public static void saveTriangleResultToFile(String fileName, List<Map<String, Object>> result)
@@ -162,7 +163,8 @@ public class PerformanceTestHelper {
     /**
      * Method to store data from triangleSet variable. Data in this variable are received within Cypher query where DISTINCT
      * filter is applied. It means it only stores unique data.
-     * @param fileName filename of the file, where data should be saved.
+     *
+     * @param fileName    filename of the file, where data should be saved.
      * @param triangleSet data to be stored.
      * @throws FileNotFoundException
      */
@@ -172,7 +174,7 @@ public class PerformanceTestHelper {
 
         out.println("Total of " + triangleSet.size() + " triangles.");
         for (String triangle : triangleSet) {
-            String [] triangleArray = triangle.split("_");
+            String[] triangleArray = triangle.split("_");
             out.print("|");
             for (String node : triangleArray) {
                 out.print(node + "|");
@@ -184,7 +186,8 @@ public class PerformanceTestHelper {
 
     /**
      * Method to store Result instance data into different structure (List<Map<String, Object>>).
-     * @param result result instance to be converted.
+     *
+     * @param result  result instance to be converted.
      * @param results container to store converted data.
      * @return container with stored converted data.
      */
@@ -198,12 +201,13 @@ public class PerformanceTestHelper {
 
     /**
      * Method to apply DISTINCT filter on data from Cypher query.
+     *
      * @param result data received within Cypher query.
      * @return unique records from Cypher query.
      */
     public static Set<String> triangleResultToTriangleSet(List<Map<String, Object>> result) {
         Set<String> triangleSet = new HashSet<String>();
-        Object [] items = new Object[3];
+        Object[] items = new Object[3];
         int i;
 
         for (Map<String, Object> row : result) {
