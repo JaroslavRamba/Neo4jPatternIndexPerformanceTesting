@@ -33,7 +33,7 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
     @Override
     public String longName() {
         return "Optimalization to get all triangles with external database, " +
-                "where single triangles are copied and queried.";
+                "where single triangles are copied and queried one by one.";
     }
 
     /**
@@ -51,7 +51,7 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
      */
     @Override
     public int dryRuns(Map<String, Object> params) {
-        return ((CacheConfiguration) params.get("cache")).needsWarmup() ? 50 : 5;
+        return ((CacheConfiguration) params.get("cache")).needsWarmup() ? 5 : 5;
     }
 
     /**
@@ -77,7 +77,6 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
         //triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "");
         triangleSet = PerformanceTestHelper.getTriangleSetFromFile("ptt-all-original.txt", "");
-
     }
 
 
@@ -102,8 +101,6 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
     public long run(final GraphDatabaseService database, Map<String, Object> params) {
         long time = 0;
         optResults = new LinkedList<Map<String, Object>>();
-
-        System.out.println("Node set " + triangleSet.size());
 
         /* Create tmp DB - TODO move this to time block */
         createTemporaryFolder();
@@ -169,6 +166,7 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
 
                     Result result = temporaryDatabase.execute("MATCH (a)--(b)--(c)--(a) RETURN id(a), id(b), id(c)");
                     PerformanceTestHelper.prepareResults(writePermission, result, optResults);
+
                     temporaryDatabase.execute("START n=node(*) MATCH n-[r]-() DELETE n, r");
                 }
 
