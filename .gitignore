@@ -10,5 +10,4 @@ target/
 *.db
 .DS_Store
 .classpath
-GetTriangle*
-ptt*
+*.txt
