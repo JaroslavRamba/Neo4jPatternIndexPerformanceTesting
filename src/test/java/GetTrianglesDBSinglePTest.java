@@ -75,7 +75,9 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
      */
     @Override
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
-        triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "");
+        //triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "");
+        triangleSet = PerformanceTestHelper.getTriangleSetFromFile("ptt-all-original.txt", "");
+
     }
 
 
@@ -167,11 +169,7 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
 
                     Result result = temporaryDatabase.execute("MATCH (a)--(b)--(c)--(a) RETURN id(a), id(b), id(c)");
                     PerformanceTestHelper.prepareResults(writePermission, result, optResults);
-
-                    //System.out.println(result.resultAsString());
                     temporaryDatabase.execute("START n=node(*) MATCH n-[r]-() DELETE n, r");
-                    //result = temporaryDatabase.execute("MATCH (n) RETURN count(n)");
-                    //System.out.println(result.resultAsString());
                 }
 
                 writePermission = PerformanceTestHelper.saveResultToFile(writePermission, "ptt-db-single", optResults);
