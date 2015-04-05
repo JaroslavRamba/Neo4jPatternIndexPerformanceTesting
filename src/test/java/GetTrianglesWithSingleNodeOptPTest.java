@@ -119,7 +119,7 @@ public class GetTrianglesWithSingleNodeOptPTest implements PerformanceTest {
             }
         });
 
-        writePermission = PerformanceTestHelper.saveResultToFile(writePermission, "ptt-single-node", optResults);
+        writePermission = PerformanceTestHelper.saveResultToFile(writePermission, "ptt-single-node-opt", optResults);
 
         return time;
     }
