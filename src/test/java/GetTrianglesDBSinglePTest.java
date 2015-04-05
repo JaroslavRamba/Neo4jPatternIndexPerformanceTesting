@@ -51,7 +51,7 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
      */
     @Override
     public int dryRuns(Map<String, Object> params) {
-        return ((CacheConfiguration) params.get("cache")).needsWarmup() ? 50 : 5;
+        return ((CacheConfiguration) params.get("cache")).needsWarmup() ? 5 : 5;
     }
 
     /**
@@ -75,7 +75,8 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
      */
     @Override
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
-        triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "");
+        //triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "");
+        triangleSet = PerformanceTestHelper.getTriangleSetFromFile("ptt-all-original.txt", "");
     }
 
 

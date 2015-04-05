@@ -99,11 +99,11 @@ public class PerformanceTestHelper {
 
             List<Map<String, Object>> resultToPrint = new ArrayList<Map<String, Object>>();
 
-            Map<String, Object> row = new HashMap<String, Object>();
+            SortedMap<String, Object> row;
             SortedSet<String> triangleSet = new TreeSet<String>();
 
             while (result.hasNext()) {
-                row = result.next();
+                row = new TreeMap<String, Object>(result.next());
                 if (type.equals("only-nodes")) {
                     triangleSet.add(getKeyToTriangleSet(row.get("id(a)"), row.get("id(b)"), row.get("id(c)")));
                 } else if (type.equals("")) {
