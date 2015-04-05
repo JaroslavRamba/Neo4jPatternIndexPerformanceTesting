@@ -41,7 +41,6 @@ public class PerformanceTestHelper {
      * @param pathToFile absolute path to file.
      * @return unique triangleSet with sorted-concatenated keys, that represent individual triangles.
      */
-    // TODO review
     public static SortedSet<String> getTriangleSetFromFile(String pathToFile, String type) {
         try {
             try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
@@ -85,7 +84,6 @@ public class PerformanceTestHelper {
      * @param database current working database.
      * @return unique triangleSet with sorted-concatenated keys, that represent individual triangles.
      */
-    // TODO review
     public static SortedSet<String> getTriangleSetFromDatabase(GraphDatabaseService database, String type) {
         try {
             Result result;
@@ -233,7 +231,7 @@ public class PerformanceTestHelper {
      * @param optResults      data to be stored.
      */
     public static boolean saveResultToFile(boolean writePermission, String filenameResult, List<Map<String, Object>> optResults) {
-        // ptt = Performance test triangle, opt = optimalized
+        // ptt = Performance test triangle, opt = optimized
         if (writePermission) {
             System.out.println("Saving results to file...");
             try {

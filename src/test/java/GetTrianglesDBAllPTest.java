@@ -21,7 +21,7 @@ public class GetTrianglesDBAllPTest implements PerformanceTest {
     SortedSet<String> triangleSet;
     private boolean writePermission = true;
     private List<Map<String, Object>> optResults;
-
+    private GraphDatabaseBuilder graphDatabaseBuilder;
 
     /**
      * {@inheritDoc}
@@ -102,18 +102,19 @@ public class GetTrianglesDBAllPTest implements PerformanceTest {
         long time = 0;
         optResults = new LinkedList<Map<String, Object>>();
 
-        /* Create tmp DB - TODO move this to time block */
         createTemporaryFolder();
-        GraphDatabaseBuilder graphDatabaseBuilder = new GraphDatabaseFactory().newEmbeddedDatabaseBuilder(temporaryFolder.getRoot().getPath());
+        graphDatabaseBuilder = new GraphDatabaseFactory().newEmbeddedDatabaseBuilder(temporaryFolder.getRoot().getPath());
         Map<String, String> dbConfig = databaseParameters(params);
         if (dbConfig != null) {
             graphDatabaseBuilder = graphDatabaseBuilder.setConfig(dbConfig);
         }
-        temporaryDatabase = graphDatabaseBuilder.newGraphDatabase();
 
         time += TestUtils.time(new TestUtils.Timed() {
             @Override
             public void time() {
+
+                temporaryDatabase = graphDatabaseBuilder.newGraphDatabase();
+
                 Iterator triangleSetIterator = triangleSet.iterator();
                 while (triangleSetIterator.hasNext()) {
                     String triangle = triangleSetIterator.next().toString();
