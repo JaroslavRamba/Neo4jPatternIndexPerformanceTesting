@@ -70,7 +70,8 @@ public class GetTrianglesWithSingleNodeOptPTest implements PerformanceTest {
      */
     @Override
     public void prepareDatabase(GraphDatabaseService database, final Map<String, Object> params) {
-        triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "only-nodes");
+        //triangleSet = PerformanceTestHelper.getTriangleSetFromDatabase(database, "only-nodes");
+        triangleSet = PerformanceTestHelper.getTriangleSetFromFile("ptt-only-nodes-original.txt", "only-nodes");
     }
 
     @Override

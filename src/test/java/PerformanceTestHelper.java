@@ -53,7 +53,7 @@ public class PerformanceTestHelper {
                     br.readLine();
 
                     while ((line = br.readLine()) != null) {
-                        String[] parts = line.substring(1, line.length() - 1).split("_");
+                        String[] parts = line.substring(1, line.length() - 1).split("\\|");
                         if (type.equals("only-nodes")) {
                             triangleSet.add(getKeyToTriangleSet(parts[0], parts[1], parts[2]));
                         } else if (type.equals("")) {
@@ -63,9 +63,9 @@ public class PerformanceTestHelper {
                         }
                     }
                     if (type.equals("only-nodes")) {
-                        saveTriangleSetResultToFile("ptt-only-nodes-original-reduced.txt", triangleSet);
+                        saveTriangleSetResultToFile("ptt-only-nodes-original-automorphism-reduced.txt", triangleSet);
                     } else if (type.equals("")) {
-                        saveTriangleSetResultToFile("ptt-all-original-reduced.txt", triangleSet);
+                        saveTriangleSetResultToFile("ptt-all-original-automorphism-reduced.txt", triangleSet);
                     }
                     return triangleSet;
                 } catch (Exception e) {
@@ -119,10 +119,10 @@ public class PerformanceTestHelper {
 
             if (type.equals("only-nodes")) {
                 saveTriangleResultToFile("ptt-only-nodes-original.txt", resultToPrint);
-                saveTriangleSetResultToFile("ptt-only-nodes-original-reduced.txt", triangleSet);
+                saveTriangleSetResultToFile("ptt-only-nodes-original-automorphism-reduced.txt", triangleSet);
             } else if (type.equals("")) {
                 saveTriangleResultToFile("ptt-all-original.txt", resultToPrint);
-                saveTriangleSetResultToFile("ptt-all-original-reduced.txt", triangleSet);
+                saveTriangleSetResultToFile("ptt-all-original-automorphism-reduced.txt", triangleSet);
             }
 
             return triangleSet;
@@ -150,8 +150,9 @@ public class PerformanceTestHelper {
         }
         out.println();
 
-        out.print("|");
+
         for (Map<String, Object> row : result) {
+            out.print("|");
             for (Map.Entry<String, Object> column : row.entrySet()) {
                 out.print(column.getValue() + "|");
             }
@@ -168,7 +169,7 @@ public class PerformanceTestHelper {
      * @param triangleSet data to be stored.
      * @throws FileNotFoundException
      */
-    public static void saveTriangleSetResultToFile(String fileName, Set<String> triangleSet)
+    public static void saveTriangleSetResultToFile(String fileName, SortedSet<String> triangleSet)
             throws FileNotFoundException {
         PrintStream out = new PrintStream(new FileOutputStream(fileName));
 
@@ -205,8 +206,8 @@ public class PerformanceTestHelper {
      * @param result data received within Cypher query.
      * @return unique records from Cypher query.
      */
-    public static Set<String> triangleResultToTriangleSet(List<Map<String, Object>> result) {
-        Set<String> triangleSet = new HashSet<String>();
+    public static SortedSet<String> triangleResultToTriangleSet(List<Map<String, Object>> result) {
+        SortedSet<String> triangleSet = new TreeSet<>();
         Object[] items = new Object[3];
         int i;
 
@@ -236,9 +237,9 @@ public class PerformanceTestHelper {
         if (writePermission) {
             System.out.println("Saving results to file...");
             try {
-                PerformanceTestHelper.saveTriangleResultToFile(filenameResult + "-opt.txt", optResults);
+                PerformanceTestHelper.saveTriangleResultToFile(filenameResult + ".txt", optResults);
 
-                PerformanceTestHelper.saveTriangleSetResultToFile(filenameResult + "-opt-reduced.txt",
+                PerformanceTestHelper.saveTriangleSetResultToFile(filenameResult + "-automorphism-reduced.txt",
                         PerformanceTestHelper.triangleResultToTriangleSet(optResults));
 
                 return false;

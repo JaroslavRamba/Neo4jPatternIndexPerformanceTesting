@@ -98,12 +98,8 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
         time += TestUtils.time(new TestUtils.Timed() {
             @Override
             public void time() {
-                // Uncomment to optimize
-                //Set<String> usedNodes = new HashSet<String>();
                 for (String nodeId : triangleSet) {
                     nodeId = nodeId.split("_")[0];
-                    // Uncomment to optimize
-                    //if (!usedNodes.contains(nodeId)) {
                     Result result = database.execute(
                             "MATCH (a)--(b)--(c)--(a) " +
                                     "WHERE id(a)=" + nodeId + " " +
@@ -116,12 +112,7 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
                                     "MATCH (a)--(b)--(c)--(a) " +
                                     "WHERE id(c)=" + nodeId + " " +
                                     "RETURN id(a), id(b), id(c)");
-                    // Uncomment to optimize
-                    //usedNodes.add(nodeId);
                     PerformanceTestHelper.prepareResults(writePermission, result, optResults);
-
-                    // Uncomment to optimize
-                    //}
                 }
             }
         });

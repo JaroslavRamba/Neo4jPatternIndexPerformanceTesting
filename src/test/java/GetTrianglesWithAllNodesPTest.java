@@ -96,12 +96,6 @@ public class GetTrianglesWithAllNodesPTest implements PerformanceTest {
     @Override
     public long run(final GraphDatabaseService database, Map<String, Object> params) {
         long time = 0;
-        int k = 0;
-
-        // TODO remove
-        System.out.println("Number of nodes set: " + triangleSet.size());
-        SortedSet<String> triangleSetResult = new TreeSet<>();
-
         optResults = new LinkedList<Map<String, Object>>();
 
         time += TestUtils.time(new TestUtils.Timed() {

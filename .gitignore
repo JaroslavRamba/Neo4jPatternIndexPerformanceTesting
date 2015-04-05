@@ -10,5 +10,5 @@ target/
 *.db
 .DS_Store
 .classpath
-triangle*
+GetTriangle*
 ptt*
