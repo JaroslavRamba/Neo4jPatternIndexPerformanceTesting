@@ -33,7 +33,7 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
     @Override
     public String longName() {
         return "Optimalization to get all triangles with external database, " +
-                "where single triangles are copied and queried.";
+                "where single triangles are copied and queried one by one.";
     }
 
     /**
@@ -102,8 +102,6 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
         long time = 0;
         optResults = new LinkedList<Map<String, Object>>();
 
-        System.out.println("Node set " + triangleSet.size());
-
         /* Create tmp DB - TODO move this to time block */
         createTemporaryFolder();
         GraphDatabaseBuilder graphDatabaseBuilder = new GraphDatabaseFactory().newEmbeddedDatabaseBuilder(temporaryFolder.getRoot().getPath());
@@ -169,10 +167,7 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
                     Result result = temporaryDatabase.execute("MATCH (a)--(b)--(c)--(a) RETURN id(a), id(b), id(c)");
                     PerformanceTestHelper.prepareResults(writePermission, result, optResults);
 
-                    //System.out.println(result.resultAsString());
                     temporaryDatabase.execute("START n=node(*) MATCH n-[r]-() DELETE n, r");
-                    //result = temporaryDatabase.execute("MATCH (n) RETURN count(n)");
-                    //System.out.println(result.resultAsString());
                 }
 
                 writePermission = PerformanceTestHelper.saveResultToFile(writePermission, "ptt-db-single", optResults);
