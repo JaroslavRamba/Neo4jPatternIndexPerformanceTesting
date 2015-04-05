@@ -29,7 +29,7 @@ public class GetTrianglesWithAllNodesPTest implements PerformanceTest {
 
     @Override
     public String longName() {
-        return "Optimalization to get all triangles with querying on all 3 defined ids" +
+        return "Optimalization to get all triangles with querying on all 3 defined node ids" +
                 "(permutation on subgraph).";
     }
 

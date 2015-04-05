@@ -23,12 +23,12 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
      */
     @Override
     public String shortName() {
-        return "triangle count";
+        return "GetTrianglesWithSingleNodePTest";
     }
 
     @Override
     public String longName() {
-        return "Cypher query for get count of triangles";
+        return "Optimalization to get all triangles with querying on single defined node id.";
     }
 
     /**
