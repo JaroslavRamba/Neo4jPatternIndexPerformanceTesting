@@ -1,10 +1,21 @@
 # Neo4jPatternIndexPerformanceTesting
 
+1) GetTrianglesOriginalTest
+   - dotaz pro získání přes trojúhelníků pomocí obyčejného Cypher dotazu
+   
+2) GetTrianglesWithSingleNodePTest 
+   - optimalizace dotazu pro získání všech trojúhelníků - dotazování trojúhelníků přes jeden (ze 3 v trojúhelníku) zakotvený uzel
+   
+3)GetTrianglesWithSingleNodeOptPTest 
+   - optimalizace dotazu pro získání všech trojúhelníků - dotazování trojúhelníků přes jeden (ze 3 v trojúhelníku) zakotvený uzel - každý uzel je dotazován nejvýše jednou (není možné se dotazovat vícekrát s jedním ukotveným uzlem)
+   
+4) GetTrianglesWithAllNodesPTest
+   - optimalizace dotazu pro získání všech trojúhelníků - dotazování trojúhelníků přes všechny (ze 3 v trojúhelníku) zakotvené uzly
+   
+5) GetTrianglesDBSinglePTest
+   - optimalizace dotazu pro získání všech trojúhelníků - nahrání každého trojúhelníku zvlášť do externí databáze a dotazování nad ním
 
-1) dotazovat se nad 1 id nodu a unionovat to pres počet uzlu
-   - vylepšení: nad neopakováním se pro dotazovaní nad jedním uzlem, již dotazované uzly neopakovat a rovnou přeskočit
-2) to samé, ale dotazovat se přes všechny nody a udělat faktorial počtu nodu = počet unionu
-3) vytvoření externí databaze a po jednom patternu to tam šoupat a dotazovat se nad tím, pak to smazat a takhle dokola krom vytvoreni DB
-4) všechno to samé jako předchozí ale na začátku vytvořit DB a všechny patterny tam vložit = subgraf patternu a nad tím se pak dotazovat přes všechny zaindexpvané patterny
+6) GetTrianglesDBAllPTest
+   - optimalizace dotazu pro získání všech trojúhelníků - nahrání všech trojúhelníku najednou do externí databáze a dotazování nad nimi
 
 
