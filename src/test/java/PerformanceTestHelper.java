@@ -38,13 +38,13 @@ public class PerformanceTestHelper {
     /**
      * Method loads triangleSet from file represented with its absolute path.
      *
-     * @param absPath absolute path to file.
+     * @param pathToFile absolute path to file.
      * @return unique triangleSet with sorted-concatenated keys, that represent individual triangles.
      */
     // TODO review
-    public static SortedSet<String> getTriangleSetFromFile(String absPath, String type) {
+    public static SortedSet<String> getTriangleSetFromFile(String pathToFile, String type) {
         try {
-            try (BufferedReader br = new BufferedReader(new FileReader(absPath))) {
+            try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
                 String line;
                 try {
                     SortedSet<String> triangleSet = new TreeSet<String>();
@@ -150,6 +150,7 @@ public class PerformanceTestHelper {
         }
         out.println();
 
+        out.print("|");
         for (Map<String, Object> row : result) {
             for (Map.Entry<String, Object> column : row.entrySet()) {
                 out.print(column.getValue() + "|");

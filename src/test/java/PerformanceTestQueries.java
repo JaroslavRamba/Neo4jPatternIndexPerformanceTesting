@@ -9,8 +9,8 @@ public class PerformanceTestQueries extends PerformanceTestSuite {
     @Override
     protected PerformanceTest[] getPerfTests() {
         return new PerformanceTest[]{
-                //new GetTrianglesWithSingleNodePTest()
-                new GetTrianglesWithAllNodesPTest()
+                new GetTrianglesWithSingleNodePTest()
+                //new GetTrianglesWithAllNodesPTest()
                 //new GetTrianglesDBSinglePTest()
                 //new GetTrianglesOriginalPTest()
         };
