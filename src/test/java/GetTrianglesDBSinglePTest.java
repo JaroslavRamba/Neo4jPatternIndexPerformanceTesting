@@ -27,12 +27,13 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
      */
     @Override
     public String shortName() {
-        return "triangle count";
+        return "GetTrianglesDBSinglePTest";
     }
 
     @Override
     public String longName() {
-        return "Cypher query for get count of triangles";
+        return "Optimalization to get all triangles with external database, " +
+                "where single triangles are copied and queried.";
     }
 
     /**
