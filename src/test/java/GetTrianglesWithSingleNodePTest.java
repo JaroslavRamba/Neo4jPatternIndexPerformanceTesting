@@ -75,7 +75,7 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
 
     @Override
     public String getExistingDatabasePath() {
-        return "testDB/graph1000-5000.db.zip";
+        return "testDb/graph1000-5000.db.zip";
     }
 
     /**
@@ -117,29 +117,15 @@ public class GetTrianglesWithSingleNodePTest implements PerformanceTest {
                                     "RETURN id(a), id(b), id(c)");
                     // Uncomment to optimize
                     //usedNodes.add(nodeId);
-                    if (writePermission) {
-                        PerformanceTestHelper.prepareResults(result, optResults);
-                    }
+                    PerformanceTestHelper.prepareResults(writePermission, result, optResults);
+
                     // Uncomment to optimize
                     //}
                 }
             }
         });
-        // ptt = Performance test triangle, opt = optimalized
-        if (writePermission) {
-            System.out.println("Saving results to file...");
-            try {
-                PerformanceTestHelper.saveTriangleResultToFile("ptt-single-node-opt.txt", optResults);
 
-                PerformanceTestHelper.saveTriangleSetResultToFile("ptt-single-node-opt-reduced.txt",
-                        PerformanceTestHelper.triangleResultToTriangleSet(optResults));
-
-                writePermission = false;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
+        writePermission = PerformanceTestHelper.saveResultToFile(writePermission, "ptt-single-node", optResults);
 
         return time;
     }

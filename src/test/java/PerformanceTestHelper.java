@@ -53,7 +53,7 @@ public class PerformanceTestHelper {
                     br.readLine();
 
                     while ((line = br.readLine()) != null) {
-                        String[] parts = line.substring(1, line.length() - 1).split("\\|"); //TODO change to _
+                        String[] parts = line.substring(1, line.length() - 1).split("_");
                         if (type.equals("only-nodes")) {
                             triangleSet.add(getKeyToTriangleSet(parts[0], parts[1], parts[2]));
                         } else if (type.equals("")) {
@@ -151,7 +151,6 @@ public class PerformanceTestHelper {
         out.println();
 
         for (Map<String, Object> row : result) {
-            out.print("|");
             for (Map.Entry<String, Object> column : row.entrySet()) {
                 out.print(column.getValue() + "|");
             }
@@ -187,16 +186,16 @@ public class PerformanceTestHelper {
     /**
      * Method to store Result instance data into different structure (List<Map<String, Object>>).
      *
-     * @param result  result instance to be converted.
-     * @param results container to store converted data.
-     * @return container with stored converted data.
+     * @param writePermission
+     * @param result          result instance to be converted.
+     * @param results         container to store converted data.
      */
-    public static List<Map<String, Object>> prepareResults(Result result, List<Map<String, Object>> results) {
-        while (result.hasNext()) {
-            results.add(result.next());
+    public static void prepareResults(boolean writePermission, Result result, List<Map<String, Object>> results) {
+        if (writePermission) {
+            while (result.hasNext()) {
+                results.add(result.next());
+            }
         }
-        return results;
-
     }
 
     /**
@@ -222,6 +221,33 @@ public class PerformanceTestHelper {
             }
         }
         return triangleSet;
+    }
+
+
+    /**
+     * Method to save cypher result to file
+     *
+     * @param writePermission true for store data, false to not store data
+     * @param optResults      data to be stored.
+     */
+    public static boolean saveResultToFile(boolean writePermission, String filenameResult, List<Map<String, Object>> optResults) {
+        // ptt = Performance test triangle, opt = optimalized
+        if (writePermission) {
+            System.out.println("Saving results to file...");
+            try {
+                PerformanceTestHelper.saveTriangleResultToFile(filenameResult + "-opt.txt", optResults);
+
+                PerformanceTestHelper.saveTriangleSetResultToFile(filenameResult + "-opt-reduced.txt",
+                        PerformanceTestHelper.triangleResultToTriangleSet(optResults));
+
+                return false;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

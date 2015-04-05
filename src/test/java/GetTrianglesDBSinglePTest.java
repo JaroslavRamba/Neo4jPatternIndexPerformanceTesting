@@ -165,30 +165,15 @@ public class GetTrianglesDBSinglePTest implements PerformanceTest {
                     }
 
                     Result result = temporaryDatabase.execute("MATCH (a)--(b)--(c)--(a) RETURN id(a), id(b), id(c)");
-                    if (writePermission) {
-                        PerformanceTestHelper.prepareResults(result, optResults);
-                    }
+                    PerformanceTestHelper.prepareResults(writePermission, result, optResults);
+
                     //System.out.println(result.resultAsString());
                     temporaryDatabase.execute("START n=node(*) MATCH n-[r]-() DELETE n, r");
                     //result = temporaryDatabase.execute("MATCH (n) RETURN count(n)");
                     //System.out.println(result.resultAsString());
                 }
 
-                if (writePermission) {
-                    System.out.println("Saving results to file...");
-                    try {
-                        PerformanceTestHelper.saveTriangleResultToFile("ptt-db-single-opt.txt", optResults);
-
-                        PerformanceTestHelper.saveTriangleSetResultToFile("ptt-db-single-opt-reduced.txt",
-                                PerformanceTestHelper.triangleResultToTriangleSet(optResults));
-
-                        writePermission = false;
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
+                writePermission = PerformanceTestHelper.saveResultToFile(writePermission, "ptt-db-single", optResults);
                 closeDatabase();
             }
         });

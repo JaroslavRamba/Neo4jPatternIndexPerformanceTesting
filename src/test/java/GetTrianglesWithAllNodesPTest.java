@@ -118,26 +118,14 @@ public class GetTrianglesWithAllNodesPTest implements PerformanceTest {
                     query = query.substring(0, query.length() - 7);
                     Result result = database.execute(query);
 
-                    if (writePermission) {
-                        PerformanceTestHelper.prepareResults(result, optResults);
-                    }
+                    PerformanceTestHelper.prepareResults(writePermission, result, optResults);
+
                 }
             }
         });
 
-        if (writePermission) {
-            System.out.println("Saving results to file...");
-            try {
-                PerformanceTestHelper.saveTriangleResultToFile("ptt-all-nodes-opt.txt", optResults);
+        writePermission = PerformanceTestHelper.saveResultToFile(writePermission, "ptt-all-nodes" ,optResults);
 
-                PerformanceTestHelper.saveTriangleSetResultToFile("ptt-all-nodes-opt-reduced.txt",
-                        PerformanceTestHelper.triangleResultToTriangleSet(optResults));
-
-                writePermission = false;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
 
         return time;
     }
