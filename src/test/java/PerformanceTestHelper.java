@@ -223,7 +223,6 @@ public class PerformanceTestHelper {
         return triangleSet;
     }
 
-
     /**
      * Method to save cypher result to file
      *
